@@ -332,28 +332,30 @@ void pid() {
     }
 
     lastLoopTime = timer.read_ms();
-    actualSpeedL = (metersPerTick * tickDataLeft) / dT_sec;
-    actualSpeedR = (metersPerTick * tickDataRight) / dT_sec;
-
-    tickDataLeft = 0;
-    tickDataRight = 0;
-
-    ErrorL = desiredSpeedL - actualSpeedL;
-    ErrorR = desiredSpeedR - actualSpeedR;
-
-    // dPV/dt
-    dErrorL = (actual_speed_last_l - actualSpeedL)/dT_sec;
-    dErrorR = (actual_speed_last_r - actualSpeedR)/dT_sec;
-
-    // sum of Error dt
-    iErrorL += ErrorL * dT_sec;
-    iErrorR += ErrorR * dT_sec;
-
-    dPWM_L = -(int)ceil((P_l * ErrorL + D_l * dErrorL + I_l * iErrorL));
-    dPWM_R = -(int)ceil((P_r * ErrorR + D_r * dErrorR + I_r * iErrorR));
-
-    PWM_L += dPWM_L;
-    PWM_R += dPWM_R;
+//    actualSpeedL = (metersPerTick * tickDataLeft) / dT_sec;
+//    actualSpeedR = (metersPerTick * tickDataRight) / dT_sec;
+//
+//    tickDataLeft = 0;
+//    tickDataRight = 0;
+//
+//    ErrorL = desiredSpeedL - actualSpeedL;
+//    ErrorR = desiredSpeedR - actualSpeedR;
+//
+//    // dPV/dt
+//    dErrorL = (actual_speed_last_l - actualSpeedL)/dT_sec;
+//    dErrorR = (actual_speed_last_r - actualSpeedR)/dT_sec;
+//
+//    // sum of Error dt
+//    iErrorL += ErrorL * dT_sec;
+//    iErrorR += ErrorR * dT_sec;
+//
+//    dPWM_L = -(int)ceil((P_l * ErrorL + D_l * dErrorL + I_l * iErrorL));
+//    dPWM_R = -(int)ceil((P_r * ErrorR + D_r * dErrorR + I_r * iErrorR));
+//
+//    PWM_L += dPWM_L;
+//    PWM_R += dPWM_R;
+    PWM_L = (int)desiredSpeedL;
+    PWM_R = (int)desiredSpeedR;
 
     PWM_L = min(255, max(-255, PWM_L));
     PWM_R = min(255, max(-255, PWM_R));
@@ -387,7 +389,7 @@ void bothMotorStop() {
 }
 
 void setLeftSpeed(int c) {
-    c = (c + 250) / 4 + 1;
+    c = c / 4 + 64;
     if (c > 127)
     {
         c = 127;
@@ -401,7 +403,7 @@ void setLeftSpeed(int c) {
 }
 
 void setRightSpeed(int c) {
-    c = (c + 250) / 4 + 1;
+    c = c / 4 + 64;
     if (c > 127)
     {
         c = 127;
