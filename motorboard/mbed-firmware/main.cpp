@@ -332,11 +332,11 @@ void pid() {
     }
 
     lastLoopTime = timer.read_ms();
-//    actualSpeedL = (metersPerTick * tickDataLeft) / dT_sec;
-//    actualSpeedR = (metersPerTick * tickDataRight) / dT_sec;
-//
-//    tickDataLeft = 0;
-//    tickDataRight = 0;
+    actualSpeedL = (metersPerTick * tickDataLeft) / dT_sec;
+    actualSpeedR = (metersPerTick * tickDataRight) / dT_sec;
+
+    tickDataLeft = 0;
+    tickDataRight = 0;
 //
 //    ErrorL = desiredSpeedL - actualSpeedL;
 //    ErrorR = desiredSpeedR - actualSpeedR;
